@@ -5,7 +5,12 @@ import * as actions from "../actions/dCandidate"
 import DcandidateForm from "./DCandidateForm";
 
 const styles = theme => ({
-
+    root:{
+"& .MuiTableCell-head" : {
+    fontSize:"1.25rem"  //not working
+    
+}
+    },
     paper:{
         margin : theme.spacing(2),
         padding : theme.spacing(2)
@@ -28,8 +33,8 @@ const Dcandidates=({classes, ...props})=> {
                 <Grid item xs={6}>
                     <TableContainer>
                         <Table>
-                            <TableHead>
-                                <TableRow>
+                            <TableHead >
+                                <TableRow classeName={classes.root}>
                                     <TableCell>Name</TableCell>
                                     <TableCell>Mobile</TableCell>
                                     <TableCell>Blood Group</TableCell>
@@ -38,7 +43,7 @@ const Dcandidates=({classes, ...props})=> {
                             <TableBody>
                                 {props.dCandidateList.map((record, index) => {
                                     return (
-                                        <TableRow key={index}>
+                                        <TableRow key={index} hover>
                                             <TableCell>{record.fullName}</TableCell>
                                             <TableCell>{record.mobile}</TableCell>
                                             <TableCell>{record.bloodGroup}</TableCell>
