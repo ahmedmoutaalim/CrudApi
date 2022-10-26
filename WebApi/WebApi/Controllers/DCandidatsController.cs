@@ -35,7 +35,7 @@ namespace WebApi.Controllers
             var dCandidat = await _context.DCandidats.FindAsync(id);
 
             if (dCandidat == null)
-            {
+            { 
                 return NotFound();
             }
 

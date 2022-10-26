@@ -4,19 +4,6 @@ import {connect} from "react-redux"
 import * as actions from "../actions/dCandidate"
 import DcandidateForm from "./DCandidateForm";
 
-const styles = theme => ({
-    root:{
-"& .MuiTableCell-head" : {
-    fontSize:"1.25rem"  //not working
-    
-}
-    },
-    paper:{
-        margin : theme.spacing(2),
-        padding : theme.spacing(2)
-    }
-})
-
 
 const Dcandidates=({classes, ...props})=> {
 
@@ -25,7 +12,7 @@ const Dcandidates=({classes, ...props})=> {
     }, []);
 
     return (
-        <Paper className={classes.paper}>
+        <Paper >
             <Grid container>
                 <Grid item xs={6}>
                     <DcandidateForm />
@@ -34,7 +21,7 @@ const Dcandidates=({classes, ...props})=> {
                     <TableContainer>
                         <Table>
                             <TableHead >
-                                <TableRow classeName={classes.root}>
+                                <TableRow >
                                     <TableCell>Name</TableCell>
                                     <TableCell>Mobile</TableCell>
                                     <TableCell>Blood Group</TableCell>
@@ -72,4 +59,4 @@ const mapActionToprops = { fetchAllDCandidates : actions.fetchAll}
 
 
 
-export default connect(mapStateToProps , mapActionToprops)(withStyles(styles)(Dcandidates)) ; 
+export default connect(mapStateToProps , mapActionToprops)(Dcandidates) ; 
