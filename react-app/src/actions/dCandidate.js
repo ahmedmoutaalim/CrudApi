@@ -40,6 +40,7 @@ api.dCandidate().create(data)
     })
     onSuccess()
 })
+.catch(err => console.log(err))
 }
 
 

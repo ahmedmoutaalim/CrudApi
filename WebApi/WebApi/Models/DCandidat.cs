@@ -17,7 +17,7 @@ namespace WebApi.Models
 
         [Column(TypeName = "nvarchar(16)")]
         public string mobile { get; set; }
-
+        
         [Column(TypeName = "nvarchar(100)")]
         public string email { get; set; }
 

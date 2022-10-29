@@ -3,6 +3,7 @@ import react , {useState , useEffect} from 'react'
 import useForm from './useForm';
 import {connect} from "react-redux"
 import * as actions from "../actions/dCandidate"
+import {useToasts} from 'react-toast-notifications'
 
 
 const initialFieledValues = {
@@ -16,14 +17,17 @@ const initialFieledValues = {
 
 
 
-const DcandidateForm = ({classes , ...props}) => {
+const DcandidateForm = ({ ...props}) => {
+
+  // toast msg 
+  const { addToast } = useToasts()
 
   const [values , setValues] = useState(initialFieledValues)
   const [errors , setErrors] = useState({})
 
     const validate = (fieldValues = values) => {
 
-      let temp = {} 
+      let temp = {...errors} 
       if('fullName' in fieldValues)
       temp.fullName = fieldValues.fullName ? "" : "this fieled is required."
       if('mobile' in fieldValues)
@@ -64,10 +68,41 @@ const DcandidateForm = ({classes , ...props}) => {
 
       const HandleSubmit = e =>{
         e.preventDefault();
-        if(validate()){
-           props.createDCandidate(values,()=>{window.alert("inserted")})
-        }
 
+        if(validate()){
+
+          const onSuccess = ()=> {
+            resetForm()
+            addToast("submitted successfuly" ,{appearance : 'success'})
+          }
+          if(props.currentId ==0)
+           props.createDCandidate(values, onSuccess)
+           else
+           props.updateDCandidate(props.currentId , values, onSuccess)
+
+        }
+         
+      }
+
+
+      useEffect(()=>{
+if(props.currentId!=0){
+setValues({
+  ...props.dCandidateList.find(x =>x.id==props.currentId)
+})
+setErrors({})}
+
+      }, [props.currentId]) 
+
+
+      const resetForm = () => {
+        setValues({
+          ...initialFieledValues
+        })
+
+        setErrors({ })
+      props.setCurrentId(0)
+        
       }
     return (
        <form autoComplete='off' noValidate onSubmit={HandleSubmit}>
@@ -148,7 +183,10 @@ const DcandidateForm = ({classes , ...props}) => {
               >
                 Submit
               </Button>
-              <Button>
+              <Button
+              variant='contained'
+              onClick={resetForm}>
+             
                 Reset
               </Button>
             </div>
@@ -164,7 +202,6 @@ const mapActionToprops = {
    createDCandidate : actions.create,
    updateDCandidate : actions.update
 
-   
   }
 
 export default connect( mapStateToProps , mapActionToprops )(DcandidateForm); 

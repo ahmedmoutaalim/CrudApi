@@ -3,11 +3,16 @@ import { store } from './actions/store';
 import {Provider} from 'react-redux'
 import Dcandidates from './components/DCandidates';
 import {Container} from '@material-ui/core'
+import {ToastProvider} from 'react-toast-notifications'
 
 function App() {
   return (
 <Provider store={store}>
-    <Container maxWidth="lg"><Dcandidates/></Container>
+  <ToastProvider autoDismiss={true}>
+    <Container maxWidth="lg">
+      <Dcandidates/>
+    </Container>
+    </ToastProvider>
 </Provider> 
 
 
